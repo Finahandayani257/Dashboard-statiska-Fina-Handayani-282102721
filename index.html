@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Performance | Descriptive Statistics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark">S</div><div><b>StudyLens</b><span>Data Dashboard</span></div></div>
+    <nav>
+      <a class="active" href="#overview">Overview</a>
+      <a href="#distribution">Distribution</a>
+      <a href="#relationships">Relationships</a>
+      <a href="#insights">Insights</a>
+      <a href="#data">Data Preview</a>
+    </nav>
+    <div class="sidebar-note"><span class="dot"></span> Local Flask App<br><small>latihan1.csv</small></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div><p class="eyebrow">DESCRIPTIVE STATISTICS</p><h1>Student Performance Dashboard</h1><p class="subtitle">A clear view of performance patterns, relationships, and practical insights.</p></div>
+      <div class="controls"><label>Gender <select id="genderFilter"><option value="ALL">All</option><option value="F">Female</option><option value="M">Male</option></select></label><button id="resetBtn">Reset</button></div>
+    </header>
+
+    <section id="overview" class="kpi-grid">
+      <article class="kpi"><span class="kpi-label">Total Records</span><strong id="kpiCount">—</strong><small>Data observations</small></article>
+      <article class="kpi"><span class="kpi-label">Average Score</span><strong id="kpiMean">—</strong><small>Mean exam score</small></article>
+      <article class="kpi"><span class="kpi-label">Median Score</span><strong id="kpiMedian">—</strong><small>Middle value</small></article>
+      <article class="kpi"><span class="kpi-label">Std. Deviation</span><strong id="kpiStd">—</strong><small>Score variation</small></article>
+      <article class="kpi"><span class="kpi-label">At-Risk Records</span><strong id="kpiRisk">—</strong><small>Score below 60</small></article>
+    </section>
+
+    <section class="widget-row">
+      <article class="widget mini-widget"><div class="widget-head"><div><span class="icon">↗</span><h3>Study & Score</h3></div><span class="badge" id="studyCorr">r = —</span></div><div class="big-value" id="studyText">—</div><p>Hubungan jam belajar dengan nilai ujian.</p></article>
+      <article class="widget mini-widget"><div class="widget-head"><div><span class="icon">✓</span><h3>Attendance & Score</h3></div><span class="badge" id="attCorr">r = —</span></div><div class="big-value" id="attText">—</div><p>Kehadiran memiliki hubungan kuat dengan performa.</p></article>
+      <article class="widget mini-widget"><div class="widget-head"><div><span class="icon">◒</span><h3>Score ≥ 80</h3></div><span class="badge soft" id="highText">—</span></div><div class="big-value" id="highPct">—</div><p>Proporsi data dengan performa tinggi.</p></article>
+    </section>
+
+    <section id="distribution" class="chart-grid">
+      <article class="panel"><div class="panel-title"><div><p class="eyebrow">SCORE DISTRIBUTION</p><h2>How scores are spread</h2></div><span class="pill">Exam Score</span></div><div class="chart-wrap"><canvas id="bandChart"></canvas></div></article>
+      <article class="panel"><div class="panel-title"><div><p class="eyebrow">GROUP COMPARISON</p><h2>Performance by gender</h2></div><span class="pill">Average</span></div><div class="chart-wrap"><canvas id="genderChart"></canvas></div></article>
+    </section>
+
+    <section id="relationships" class="chart-grid">
+      <article class="panel"><div class="panel-title"><div><p class="eyebrow">RELATIONSHIP</p><h2>Study hours vs. exam score</h2></div><span class="pill" id="corrPill">Correlation —</span></div><div class="chart-wrap"><canvas id="scatterChart"></canvas></div></article>
+      <article class="panel"><div class="panel-title"><div><p class="eyebrow">CORRELATION CHECK</p><h2>What moves with score?</h2></div><span class="pill">Pearson r</span></div><div class="corr-list" id="corrList"></div></article>
+    </section>
+
+    <section id="insights" class="insight-grid">
+      <article class="panel text-panel"><p class="eyebrow">DESCRIPTIVE ANALYSIS</p><h2>Analisis Statistik Deskriptif</h2><div id="analysisText"></div></article>
+      <article class="panel text-panel"><p class="eyebrow">DECISION SUPPORT</p><h2>Keputusan yang Bisa Diambil</h2><div id="decisionText"></div></article>
+    </section>
+
+    <section id="data" class="panel data-panel"><div class="panel-title"><div><p class="eyebrow">DATA PREVIEW</p><h2>Selected records</h2></div><input id="searchInput" class="search" placeholder="Search student ID..." /></div><div class="table-scroll"><table><thead><tr><th>ID</th><th>Gender</th><th>Age</th><th>Study</th><th>Attendance</th><th>Score</th><th>Screen</th><th>Satisfaction</th></tr></thead><tbody id="dataBody"></tbody></table></div></section>
+    <footer>Built for local analysis · Flask + HTML + CSS + JavaScript</footer>
+  </main>
+</div>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
